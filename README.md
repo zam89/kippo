@@ -5,7 +5,7 @@ Kippo is a medium interaction SSH honeypot designed to log brute force attacks a
 
 Kippo is inspired, but not based on Kojoney.
 
-*Demo*
+**Demo**
 
 Some interesting logs from a live Kippo installation below (viewable within a web browser with the help of Ajaxterm). Note that some commands may have been improved since these logs were recorded.
 * [2009-11-22](http://kippo.rpg.fi/playlog/?l=20091122-075013-5055.log)
@@ -13,7 +13,7 @@ Some interesting logs from a live Kippo installation below (viewable within a we
 * [2009-11-23](http://kippo.rpg.fi/playlog/?l=20091123-012814-626.log)
 * [2010-03-16](http://kippo.rpg.fi/playlog/?l=20100316-233121-1847.log)
 
-*Features*
+**Features**
 
 Some interesting features:
 * Fake filesystem with the ability to add/remove files. A full fake filesystem resembling a Debian 5.0 installation is included
@@ -22,7 +22,7 @@ Some interesting features:
 * Just like Kojoney, Kippo saves files downloaded with wget for later inspection
 * Trickery; ssh pretends to connect somewhere, exit doesn't really exit, etc 
 
-*Requirements*
+**Requirements**
 
 Software required:
 * An operating system (tested on Debian, CentOS, FreeBSD and Windows 7)
@@ -33,7 +33,7 @@ Software required:
 
 See Wiki for some installation instructions.
 
-*How to run it?*
+**How to run it?**
 
 Edit kippo.cfg to your liking and start the honeypot by running:
 
@@ -54,9 +54,10 @@ Files of interest:
 * fs.pickle - fake filesystem
 * honeyfs/ - file contents for the fake filesystem - feel free to copy a real system here 
 
-Is it secure?
+**Is it secure?**
 
 Maybe. See FAQ
-I have some questions!
+
+**I have some questions!**
 
 I am might be reachable via e-mail: desaster at gmail dot com, or as desaster on the #honeypots channel in the freenode IRC network.
