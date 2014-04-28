@@ -7,6 +7,7 @@ Kippo is inspired, but not based on Kojoney.
 
 
 **Demo**
+
 Some interesting logs from a live Kippo installation below (viewable within a web browser with the help of Ajaxterm). Note that some commands may have been improved since these logs were recorded.
 * [2009-11-22](http://kippo.rpg.fi/playlog/?l=20091122-075013-5055.log)
 * [2009-11-23](http://kippo.rpg.fi/playlog/?l=20091123-003854-3359.log)
@@ -15,6 +16,7 @@ Some interesting logs from a live Kippo installation below (viewable within a we
 
 
 **Features**
+
 Some interesting features:
 * Fake filesystem with the ability to add/remove files. A full fake filesystem resembling a Debian 5.0 installation is included
 * Possibility of adding fake file contents so the attacker can 'cat' files such as /etc/passwd. Only minimal file contents are included
@@ -24,6 +26,7 @@ Some interesting features:
 
 
 **Requirements**
+
 Software required:
 * An operating system (tested on Debian, CentOS, FreeBSD and Windows 7)
 * Python 2.5+
@@ -35,6 +38,7 @@ See Wiki for some installation instructions.
 
 
 **How to run it?**
+
 Edit kippo.cfg to your liking and start the honeypot by running:
 ```
 ./start.sh
@@ -56,8 +60,10 @@ Files of interest:
 
 
 **Is it secure?**
+
 Maybe. See FAQ
 
 
 **I have some questions!**
+
 I am might be reachable via e-mail: desaster at gmail dot com, or as desaster on the #honeypots channel in the freenode IRC network.
