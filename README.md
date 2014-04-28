@@ -61,7 +61,7 @@ Files of interest:
 
 **Is it secure?**
 
-Maybe. See FAQ
+Maybe. See [FAQ](wiki/FAQ)
 
 
 **I have some questions!**
