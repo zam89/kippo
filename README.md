@@ -5,7 +5,7 @@ Kippo is a medium interaction SSH honeypot designed to log brute force attacks a
 
 Kippo is inspired, but not based on Kojoney.
 
-*Demo*
+**Demo**
 
 Some interesting logs from a live Kippo installation below (viewable within a web browser with the help of Ajaxterm). Note that some commands may have been improved since these logs were recorded.
 
@@ -14,7 +14,7 @@ Some interesting logs from a live Kippo installation below (viewable within a we
 * [2009-11-23](http://kippo.rpg.fi/playlog/?l=20091123-012814-626.log)
 * [2010-03-16](http://kippo.rpg.fi/playlog/?l=20100316-233121-1847.log)
 
-*Features*
+**Features**
 
 Some interesting features:
 
@@ -58,10 +58,10 @@ Files of interest:
 * fs.pickle - fake filesystem
 * honeyfs/ - file contents for the fake filesystem - feel free to copy a real system here
 
-Is it secure?
+**Is it secure?**
 
 Maybe. See [FAQ](https://github.com/zam89/kippo/wiki/FAQ)
 
-I have some questions!
+**I have some questions!**
 
 I am might be reachable via e-mail: desaster at gmail dot com, or as desaster on the #honeypots channel in the freenode IRC network.
