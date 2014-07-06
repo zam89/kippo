@@ -24,7 +24,7 @@ Some interesting features:
 * Just like Kojoney, Kippo saves files downloaded with wget for later inspection
 * Trickery; ssh pretends to connect somewhere, exit doesn't really exit, etc
 
-Requirements
+**Requirements**
 
 Software required:
 
@@ -36,7 +36,7 @@ Software required:
 
 See Wiki for some installation instructions.
 
-How to run it?
+**How to run it?**
 
 Edit kippo.cfg to your liking and start the honeypot by running:
 ```
@@ -46,7 +46,7 @@ start.sh is a simple shell script that runs Kippo in the background using twistd
 ```
 twistd -y kippo.tac -n
 ```
-By default Kippo listens for ssh connections on port 2222. You can change this, but do not change it to 22 as it requires root privileges. Use port forwarding instead. (More info: MakingKippoReachable).
+By default Kippo listens for ssh connections on port 2222. You can change this, but do not change it to 22 as it requires root privileges. Use port forwarding instead. (More info: [MakingKippoReachable](https://github.com/zam89/kippo/wiki/Making-kippo-reachable-through-port-22)).
 
 Files of interest:
 
