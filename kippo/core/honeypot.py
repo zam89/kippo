@@ -65,7 +65,8 @@ class HoneyPotShell(object):
 
     def lineReceived(self, line):
         print 'CMD: %s' % line
-        for i in [x.strip() for x in line.strip().split(';')]:
+        line = line[:500]
+        for i in [x.strip() for x in line.strip().split(';')[:10]]:
             if not len(i):
                 continue
             self.cmdpending.append(i)
@@ -89,7 +90,7 @@ class HoneyPotShell(object):
             cmdAndArgs = shlex.split(line)
         except:
             self.honeypot.writeln(
-                '-bash: syntax error: unexpected end of file')
+                'bash: syntax error: unexpected end of file')
             # could run runCommand here, but i'll just clear the list instead
             self.cmdpending = []
             self.showPrompt()
@@ -136,10 +137,16 @@ class HoneyPotShell(object):
         self.runCommand()
 
     def showPrompt(self):
+        # Example: svr03:~#
+        #prompt = '%s:%%(path)s' % self.honeypot.hostname
+        # Example: root@svr03:~#     (More of a "Debianu" feel)
+        prompt = '%s@%s:%%(path)s' % (self.honeypot.user.username, self.honeypot.hostname,)
+        # Example: [root@svr03 ~]#   (More of a "CentOS" feel)
+        #prompt = '[%s@%s %%(path)s]' % (self.honeypot.user.username, self.honeypot.hostname,)
         if not self.honeypot.user.uid:
-            prompt = '%s:%%(path)s# ' % self.honeypot.hostname
+            prompt += '# '    # "Root" user
         else:
-            prompt = '%s:%%(path)s$ ' % self.honeypot.hostname
+            prompt += '$ '    # "Non-Root" user
 
         path = self.honeypot.cwd
         homelen = len(self.honeypot.user.home)
@@ -148,6 +155,11 @@ class HoneyPotShell(object):
         elif len(path) > (homelen+1) and \
                 path[:(homelen+1)] == self.honeypot.user.home + '/':
             path = '~' + path[homelen:]
+        # Uncomment the three lines below for a 'better' CenOS look.
+        # Rather than '[root@svr03 /var/log]#' is shows '[root@svr03 log]#'.
+        #path = path.rsplit('/', 1)[-1]
+        #if not path:
+        #    path = '/'
 
         attrs = {'path': path}
         self.honeypot.terminal.write(prompt % attrs)
@@ -284,7 +296,7 @@ class HoneyPotProtocol(recvline.HistoricRecvLine):
         except:
             pass
 
-    # this doesn't seem to be called upon disconnect, so please use 
+    # this doesn't seem to be called upon disconnect, so please use
     # HoneyPotTransport.connectionLost instead
     def connectionLost(self, reason):
         recvline.HistoricRecvLine.connectionLost(self, reason)
@@ -349,7 +361,7 @@ class HoneyPotProtocol(recvline.HistoricRecvLine):
         else:
             self.lineBuffer[self.lineBufferIndex:self.lineBufferIndex+1] = [ch]
         self.lineBufferIndex += 1
-        if not self.password_input: 
+        if not self.password_input:
             self.terminal.write(ch)
 
     def writeln(self, data):
@@ -424,7 +436,7 @@ class LoggingServerProtocol(insults.ServerProtocol):
                 ttylog.TYPE_OUTPUT, time.time(), bytes)
         insults.ServerProtocol.write(self, bytes)
 
-    # this doesn't seem to be called upon disconnect, so please use 
+    # this doesn't seem to be called upon disconnect, so please use
     # HoneyPotTransport.connectionLost instead
     def connectionLost(self, reason):
         insults.ServerProtocol.connectionLost(self, reason)

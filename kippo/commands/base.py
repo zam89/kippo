@@ -52,9 +52,15 @@ commands['exxxit'] = command_exxxit
 
 class command_exit(HoneyPotCommand):
     def call(self):
+        cfg = config()
+        self.exit_jail = True
+        if cfg.has_option('honeypot', 'exit_jail'):
+            if (cfg.get('honeypot', 'exit_jail') == "false"):
+                self.exit_jail = False
         if 'PuTTY' in self.honeypot.clientVersion or \
                 'libssh' in self.honeypot.clientVersion or \
-                'sshlib' in self.honeypot.clientVersion:
+                'sshlib' in self.honeypot.clientVersion or \
+                self.exit_jail is False:
             self.honeypot.terminal.loseConnection()
             return
         self.honeypot.terminal.reset()
@@ -78,9 +84,10 @@ commands['/bin/hostname'] = command_hostname
 
 class command_uname(HoneyPotCommand):
     def call(self):
-        if len(self.args) and self.args[0].strip() == '-a':
+        if len(self.args) and self.args[0].strip() in ('-a', '--all'):
+            today = datetime.date.today()
             self.writeln(
-                'Linux %s 2.6.26-2-686 #1 SMP Wed Nov 4 20:45:37 UTC 2009 i686 GNU/Linux' % \
+                'Linux %s 3.11.0-15-generic #23-Ubuntu SMP Mon Dec 9 18:17:04 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux' % \
                 self.honeypot.hostname)
         else:
             self.writeln('Linux')
@@ -169,7 +176,7 @@ class command_passwd(HoneyPotCommand):
     def finish(self, line):
         self.honeypot.password_input = False
 
-        if line != self.passwd:
+        if line != self.passwd or self.passwd == '*':
             self.writeln('Sorry, passwords do not match')
             self.exit()
             return
@@ -195,7 +202,7 @@ class command_shutdown(HoneyPotCommand):
                 "-a:      use /etc/shutdown.allow ",
                 "-k:      don't really shutdown, only warn. " ,
                 "-r:      reboot after shutdown. " ,
-                "-h:      halt after shutdown. " ,  
+                "-h:      halt after shutdown. " ,
                 "-P:      halt action is to turn off power. " ,
                 "-H:      halt action is to just halt. " ,
                 "-f:      do a 'fast' reboot (skip fsck). " ,
@@ -211,7 +218,7 @@ class command_shutdown(HoneyPotCommand):
         elif len(self.args) > 1 and self.args[0].strip().count('-h') \
                 and self.args[1].strip().count('now'):
             self.nextLine()
-            self.writeln(  
+            self.writeln(
                 'Broadcast message from root@%s (pts/0) (%s):' % \
                 (self.honeypot.hostname, time.ctime()))
             self.nextLine()
@@ -220,7 +227,7 @@ class command_shutdown(HoneyPotCommand):
         elif len(self.args) > 1 and self.args[0].strip().count('-r') \
                 and self.args[1].strip().count('now'):
             self.nextLine()
-            self.writeln(  
+            self.writeln(
                 'Broadcast message from root@%s (pts/0) (%s):' % \
                 (self.honeypot.hostname, time.ctime()))
             self.nextLine()
@@ -230,7 +237,7 @@ class command_shutdown(HoneyPotCommand):
             self.writeln("Try `shutdown --help' for more information.")
             self.exit()
             return
-            
+
     def finish(self):
         self.writeln('Connection to server closed.')
         self.honeypot.hostname = 'localhost'
@@ -291,16 +298,48 @@ class command_yes(HoneyPotCommand):
         self.exit()
 commands['/usr/bin/yes'] = command_yes
 
+class command_getconf(HoneyPotCommand):
+    def call(self):
+        if len(self.args) and self.args[0].strip() == 'LONG_BIT':
+            self.writeln("64")
+        else:
+            output = (
+                "Usage: getconf [-v specification] variable_name [pathname]",
+                "       getconf -a [pathname]",
+                )
+            for l in output:
+                self.writeln(l)
+            self.exit()
+commands['/usr/bin/getconf'] = command_getconf
+
+class command_chmod(HoneyPotCommand):
+    def call(self):
+        if len(self.args) < 2:
+            self.writeln('chmod: missing operand')
+            self.writeln('Try chmod --help for more information.')
+            return
+        for arg in self.args[1:]:
+            path = self.fs.resolve_path(arg, self.honeypot.cwd)
+            if not self.fs.exists(path):
+                self.writeln(
+                    'chmod: cannot access %s: No such file or directory' % \
+                    (arg,))
+commands['/bin/chmod'] = command_chmod
+
 class command_nop(HoneyPotCommand):
     def call(self):
         pass
-commands['/bin/chmod'] = command_nop
+commands['umask'] = command_nop
 commands['set'] = command_nop
 commands['unset'] = command_nop
 commands['export'] = command_nop
+commands['alias'] = command_nop
 commands['/bin/bash'] = command_nop
 commands['/bin/sh'] = command_nop
 commands['/bin/kill'] = command_nop
 commands['/bin/su'] = command_nop
+commands['/bin/chown'] = command_nop
+commands['/bin/chgrp'] = command_nop
+commands['/usr/bin/chattr'] = command_nop
 
 # vim: set sw=4 et:
