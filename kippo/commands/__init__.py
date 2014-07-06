@@ -14,4 +14,6 @@ __all__ = [
     'last',
     'fs',
     'malware',
+    'iptables',
+    'env',
     ]

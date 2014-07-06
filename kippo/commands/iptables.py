@@ -13,9 +13,8 @@ commands = {}
 class command_iptables(HoneyPotCommand):
     def call(self):
         if len(self.args) and self.args[0].strip() in ('-h', '--help'):
-            self.writeln(
+            output = (
                 "iptables v1.4.12",
-                "",
                 "Usage: iptables -[ACD] chain rule-specification [options]",
                 "       iptables -I chain [rulenum] rule-specification [options]",
                 "       iptables -R chain rulenum rule-specification [options]",
@@ -26,7 +25,6 @@ class command_iptables(HoneyPotCommand):
                 "       iptables -E old-chain-name new-chain-name",
                 "       iptables -P chain target [options]",
                 "       iptables -h (print this help information)",
-                "",
                 "Commands:",
                 "Either long or short options are allowed.",
                 "  --append  -A chain           Append to chain",
@@ -82,15 +80,14 @@ class command_iptables(HoneyPotCommand):
                 "[!] --version   -V             print package version.",
             )
             for l in output:
-                    self.writeln(l)
+                self.writeln(l)
                 self.exit()
         else:
             output = (
                 "iptables v1.4.12: unknown option '$s'",
-                "Try `iptables -h' or 'iptables --help' for more information.", % (arg,)
+                "Try `iptables -h' or 'iptables --help' for more information.",
                 )
             for l in output:
                 self.writeln(l)
-            self.exit()
-
+                self.exit()
 commands['/sbin/iptables'] = command_iptables

@@ -1,6 +1,6 @@
 [    0.000000] Initializing cgroup subsys cpuset
 [    0.000000] Initializing cgroup subsys cpu
-[    0.000000] Linux version 2.6.26-2-686 (Debian 2.6.26-19lenny2) (dannf@debian.org) (gcc version 4.1.3 20080704 (prerelease) (Debian 4.1.2-25)) #1 SMP Wed Nov 4 20:45:37 UTC 2009
+[    0.000000] Linux version 3.11.0-15-generic (buildd@allspice) (gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) ) #25~precise1-Ubuntu SMP Thu Jan 30 17:39:31 UTC 2014 (Ubuntu 3.11.0-15.25~precise1-generic 3.11.10)
 [    0.000000] BIOS-provided physical RAM map:
 [    0.000000]  BIOS-e820: 0000000000000000 - 000000000009f800 (usable)
 [    0.000000]  BIOS-e820: 000000000009f800 - 00000000000a0000 (reserved)

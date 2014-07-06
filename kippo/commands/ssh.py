@@ -70,8 +70,9 @@ class command_ssh(HoneyPotCommand):
         if not self.fs.exists(self.honeypot.cwd):
             self.honeypot.cwd = '/'
         self.honeypot.password_input = False
+        today = datetime.date.today()
         self.writeln(
-            'Linux %s 2.6.26-2-686 #1 SMP Wed Nov 4 20:45:37 UTC 2009 i686' % \
+            'Linux %s 3.11.0-15-generic #23-Ubuntu SMP Mon Dec 9 18:17:04 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux' % \
             self.honeypot.hostname)
         self.writeln('Last login: %s from 192.168.9.4' % \
             time.ctime(time.time() - 123123))
