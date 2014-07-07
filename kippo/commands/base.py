@@ -41,15 +41,6 @@ class command_echo(HoneyPotCommand):
         self.writeln(' '.join(self.args))
 commands['/bin/echo'] = command_echo
 
-# for testing purposes
-class command_exxxit(HoneyPotCommand):
-    def call(self):
-        if self.honeypot.clientIP.startswith('127.0.0.'):
-            self.honeypot.terminal.loseConnection()
-        else:
-            self.writeln('bash: exxxit: command not found')
-commands['exxxit'] = command_exxxit
-
 class command_exit(HoneyPotCommand):
     def call(self):
         cfg = config()

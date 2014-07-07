@@ -26,11 +26,11 @@ def recurse(root, tree, count = 0):
             continue
 
         entry = [name, T_FILE, s.st_uid, s.st_gid, s.st_size, s.st_mode, \
-            int(s.st_mtime), [], None, None]
+            int(s.st_ctime), [], None, None]
 
-	if S_ISLNK(s[ST_MODE]):
-	    entry[A_TYPE] = T_LINK
-	    entry[A_TARGET] = os.path.realpath(path)
+        if S_ISLNK(s[ST_MODE]):
+            entry[A_TYPE] = T_LINK
+            entry[A_TARGET] = os.path.realpath(path)
         elif S_ISDIR(s[ST_MODE]):
             entry[A_TYPE] = T_DIR
             if not path.startswith('/proc/'):
@@ -47,7 +47,7 @@ def recurse(root, tree, count = 0):
             entry[A_TYPE] = T_FIFO
         else:
             sys.stderr.write('We should handle %s' % path)
-	    sys.exit(1)
+            sys.exit(1)
 
         tree.append(entry)
 
