@@ -32,8 +32,8 @@ def sizeof_fmt(num):
         num /= 1024.0
 
 # Luciano Ramalho @ http://code.activestate.com/recipes/498181/
-def splitthousands( s, sep=','):
-    if len(s) <= 3: return s
+def splitthousands( s, sep=','):  
+    if len(s) <= 3: return s  
     return splitthousands(s[:-3], sep) + sep + s[-3:]
 
 class command_wget(HoneyPotCommand):
@@ -79,12 +79,8 @@ class command_wget(HoneyPotCommand):
 
     def download(self, url, fakeoutfile, outputfile, *args, **kwargs):
         try:
-            parsed = urlparse.urlparse(url)
-            scheme = parsed.scheme
-            host = parsed.hostname
-            port = parsed.port or (443 if scheme == 'https' else 80)
-            path = parsed.path or '/'
-            if scheme == 'https' or port != 80:
+            scheme, host, port, path = client._parse(url)
+            if scheme == 'https':
                 self.writeln('Sorry, SSL not supported in this release')
                 self.exit()
                 return None
@@ -126,10 +122,10 @@ class command_wget(HoneyPotCommand):
 commands['/usr/bin/wget'] = command_wget
 
 # from http://code.activestate.com/recipes/525493/
-class HTTPProgressDownloader(client.HTTPDownloader):
+class HTTPProgressDownloader(client.HTTPDownloader):    
     def __init__(self, wget, fakeoutfile, url, outfile, headers=None):
         client.HTTPDownloader.__init__(self, url, outfile, headers=headers,
-            agent='Wget/1.13.4 (linux-gnu)')
+            agent='Wget/1.11.4')
         self.status = None
         self.wget = wget
         self.fakeoutfile = fakeoutfile
@@ -137,7 +133,7 @@ class HTTPProgressDownloader(client.HTTPDownloader):
         self.started = time.time()
         self.proglen = 0
         self.nomore = False
-
+    
     def noPage(self, reason): # called for non-200 responses
         if self.status == '304':
             client.HTTPDownloader.page(self, '')
